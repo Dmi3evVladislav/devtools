@@ -1,0 +1,29 @@
+@media only screen and (max-width: 1200px) {
+    .header {
+        background-color: #E2ADF2;
+        width: 800px;
+    }
+    .service {
+        background-color: #ff585d;
+        width: 190px;
+    }
+    .proj {
+        width: 290px;
+        background-color: #ffb549;
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    .header {
+        background-color: #E2ADF2;
+        width: 600px;
+    }
+    .service {
+        background-color: #ff585d;
+        width: 100px;
+    }
+    .proj {
+        width: 150px;
+        background-color: #ffb549;
+    }
+}

@@ -1,0 +1,41 @@
+.container {
+    max-width: 1200px;
+}
+
+.header {
+    background-color: #E2ADF2;
+    width: 100%;
+}
+.services {
+    width: 100%;
+}
+.service {
+    background-color: #ff585d;
+    width: 23%;
+}
+.proj {
+    width: 32%;
+    background-color: #ffb549;
+}
+
+@media only screen and (max-width: 1000px) {
+    .service {
+        background-color: #ff585d;
+        width: 45%;
+    }
+    .proj {
+        width: 90%;
+        background-color: #ffb549;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .service {
+        background-color: #ff585d;
+        width: 100%;
+    }
+    .proj {
+        width: 90%;
+        background-color: #ffb549;
+    }
+}
