@@ -81,9 +81,6 @@ function countPairsPerDay(schedule) {
   return days;
 }
 
-const pairsInDay = countPairsPerDay(columns[1])
-console.log(pairsInDay);
-
 
 function transliterateGroupName(groupName) {
   const cyrillicToLatin = {
@@ -139,14 +136,16 @@ function processSchedule(scheduleArray, daysPairs) {
           
           // Обработка 5 случаев
           if (first !== 'empty' && first !== null) {
-              processPair(first, daySchedule.nominator);
+              if (first !== null && second == null) {
+                processPair(first, daySchedule.nominator);
+                processPair(first, daySchedule.denominator);
+              }
+              else {
+                processPair(first, daySchedule.nominator);
+              }
           }
           if (second !== 'empty' && second !== null) {
               processPair(second, daySchedule.denominator);
-          }
-          if (first !== null && second == null) {
-            processPair(first, daySchedule.nominator);
-            processPair(first, daySchedule.denominator);
           }
       }
       
@@ -160,9 +159,13 @@ function processSchedule(scheduleArray, daysPairs) {
   };
 }
 
-const result = processSchedule(columns[2], pairsInDay);
-console.log(JSON.stringify(result, null, 2));
-fs.writeFileSync('output.json', JSON.stringify(result, null, 2));
+const pairsInDay = countPairsPerDay(columns[1])
+let output = []
+for(let i = 2; i < columns.length-2; i++){
+  const result = processSchedule(columns[i], pairsInDay);
+  output.push(result)
+}
+fs.writeFileSync('output.json', JSON.stringify(output, null, 2));
 
 
 // // Сохранение JSON в файл
