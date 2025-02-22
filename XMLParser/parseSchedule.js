@@ -5,49 +5,15 @@ const excelFile = 'rasp_2s_24-25.xlsx';
 const workbook = XLSX.readFile(excelFile);
 
 // Получение первого листа
-const sheetName = workbook.SheetNames[0];
-const worksheet = workbook.Sheets[sheetName];
-
-const rows = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
-
-function transpose(matrix) {
-    return matrix[0].map((_, colIndex) => matrix.map(row => row[colIndex]));
-  }
-  
-const columns = transpose(rows);
-fs.writeFileSync('temp.json', JSON.stringify(columns, null, 2));
-
-function countPairs(schedule) {
-  const pairsCount = [];
-  let count = 0;
-
-  for (let i = 1; i < schedule.length; i++) {
-      if (schedule[i] !== null) {
-          count++;
-      } else {
-          // Если встретили null, значит день закончился
-          if (count > 0) {
-              pairsCount.push(count);
-              count = 0; // Сбросить счетчик для следующего дня
-          }
-      }
-  }
-
-  // Добавить последний день, если он не закончился на null
-  if (count > 0) {
-      pairsCount.push(count);
-  }
-
-  return pairsCount;
-}
 
 function countPairsPerDay(schedule) {
   const days = [];
   let currentDayCount = 0;
   let previousElement = null;
   let metTwoNulls = false;
+  
 
-  for (const element of schedule) {
+  for (let element of schedule) {
       if (metTwoNulls) break;
 
       if (element === null) {
@@ -159,12 +125,50 @@ function processSchedule(scheduleArray, daysPairs) {
   };
 }
 
-const pairsInDay = countPairsPerDay(columns[1])
-let output = []
-for(let i = 2; i < columns.length-2; i++){
-  const result = processSchedule(columns[i], pairsInDay);
-  output.push(result)
+function transpose(matrix) {
+  return matrix[0].map((_, colIndex) => matrix.map(row => row[colIndex]));
 }
+
+let output = []
+
+const sheetNames = workbook.SheetNames // Массив с курсами (имена листов)
+// console.log(sheetNames);
+
+sheetNames.forEach((worksheetName, sheetNum) => {
+  console.log(worksheetName);
+  
+  const worksheet = workbook.Sheets[worksheetName]; // Лист курса
+  const rows = XLSX.utils.sheet_to_json(worksheet, { header: 1 }); // Строки
+
+  // console.log(rows);
+  
+
+  let columns = transpose(rows);
+  // console.log(JSON.stringify(columns, null, 2));
+  
+
+  const pairsInDay = countPairsPerDay(columns[1])
+  let outputSheet = []
+
+  for(let i = 2; i < columns.length-2; i++){
+    const result = processSchedule(columns[i], pairsInDay);
+      outputSheet.push({
+      group: result.group,
+      data: result
+    })
+  }
+
+  output.push({
+    course: worksheetName,
+    groups: outputSheet
+  })
+})
+  
+// fs.writeFileSync('temp.json', JSON.stringify(columns, null, 2));
+
+
+
+
 fs.writeFileSync('output.json', JSON.stringify(output, null, 2));
 
 
