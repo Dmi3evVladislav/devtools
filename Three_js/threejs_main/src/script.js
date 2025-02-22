@@ -11,7 +11,7 @@ const scene = new THREE.Scene();
 
 // const colors = [0xb7e8d8, 0xe86344, 0xe8ab9c]
 
-const geometry = new THREE.BoxGeometry(1, 1, 1, 4, 4, 4); //Куб
+const geometry = new THREE.BoxGeometry(1, 1, 1, 1, 1, 1); //Куб
 // const geometry = new THREE.CircleGeometry(1, 20, 0, Math.PI) //Диск
 // const geometry = new THREE.PlaneGeometry(1, 1, 10, 10) //Плоскость
 // const geometry = new THREE.ConeGeometry(1, 2, 32, 1, false, 0, Math.PI) //Конус
@@ -26,12 +26,12 @@ const geometry = new THREE.BoxGeometry(1, 1, 1, 4, 4, 4); //Куб
 // const geometry = new THREE.SphereGeometry(1, 32, 16, 0, Math.PI, 0, Math.PI / 2) //Классическая сфера
 // const geometry = new THREE.SphereGeometry(1, 32, 32)
 
-const material = new THREE.MeshNormalMaterial();
+// const material = new THREE.MeshNormalMaterial();
 
-// const material = new THREE.MeshBasicMaterial({ 
-//     color: 'purple',
-//     wireframe: true,
-// });
+const material = new THREE.MeshBasicMaterial({ 
+    color: 'white',
+    wireframe: true,
+});
 
 // const group = new THREE.Group();
 // group.scale.y = 1.4
@@ -103,7 +103,7 @@ scene.add(mesh);
 //scene.add(group)
 
 const sizes = {
-    width: window.innerWidth,
+    width: window.innerWidth/2,
     height: window.innerHeight,
 };
 
