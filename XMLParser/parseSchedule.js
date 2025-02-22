@@ -70,7 +70,7 @@ function transliterateGroupName(groupName) {
 }
 
 function processSchedule(scheduleArray, daysPairs) {
-  const daysOfWeek = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'];
+  const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   const groupName = scheduleArray[0]
   
   let schedule = [];
@@ -93,9 +93,45 @@ function processSchedule(scheduleArray, daysPairs) {
           
           const processPair = (source, target) => {
               if (typeof source === 'string' && source !== 'empty') {
+                let startTime
+                let endTime
+                switch (pairNum) {
+                  case 1:
+                    startTime = "8:30"
+                    endTime = "10:05"
+                    break;
+                  case 2:
+                    startTime = "10:20"
+                    endTime = "11:55"
+                    break;
+                  case 3:
+                    startTime = "12:10"
+                    endTime = "13:45"
+                    break;
+                  case 4:
+                    startTime = "14:15"
+                    endTime = "15:50"
+                    break;
+                  case 5:
+                      startTime = "16:05"
+                      endTime = "17:40"
+                      break;
+                  case 6:
+                      startTime = "17:50"
+                      endTime = "19:25"
+                      break;
+                  case 7:
+                      startTime = "19:35"
+                      endTime = "21:10"
+                      break;
+                  default:
+                    break;
+                }
                   target.push({
                       pairNum: pairNum,
-                      pair: source
+                      pair: source,
+                      startTime: startTime,
+                      endTime: endTime
                   });
               }
           };
